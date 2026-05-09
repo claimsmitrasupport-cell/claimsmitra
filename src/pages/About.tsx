@@ -2,52 +2,26 @@ import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, MessageCircle, Phone, ShieldCheck, Sparkles, Target, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import aboutTeam from "@/assets/about-team.jpg";
+import { useT } from "@/i18n/LanguageContext";
 
 const leadership = [
-  {
-    name: "Sneha Kaushik Trivedi",
-    role: "Promoter & Partner",
-    initials: "SK",
-  },
-  {
-    name: "Kaushik Meghani",
-    role: "Partner",
-    initials: "KM",
-  },
-  {
-    name: "Sanjeev Sharda",
-    role: "Partner",
-    initials: "SS",
-  },
+  { name: "Sneha Kaushik Trivedi", roleKey: "role_promoter" as const, initials: "SK" },
+  { name: "Kaushik Meghani", roleKey: "role_partner" as const, initials: "KM" },
+  { name: "Sanjeev Sharda", roleKey: "role_partner" as const, initials: "SS" },
 ];
 
 const reasons = [
-  {
-    icon: ShieldCheck,
-    title: "Expert support for stuck claims",
-    desc: "Specialists who handle rejected, delayed and short-settled claims every single day.",
-  },
-  {
-    icon: Sparkles,
-    title: "Transparent & trustworthy",
-    desc: "Clear timelines, honest assessments and no false promises — ever.",
-  },
-  {
-    icon: Users,
-    title: "Experienced professionals",
-    desc: "A dedicated team with deep knowledge of IRDAI regulations and insurer playbooks.",
-  },
-  {
-    icon: Target,
-    title: "Customer-first approach",
-    desc: "We measure success only when you receive what you rightfully deserve.",
-  },
+  { icon: ShieldCheck, tKey: "about_r1_t" as const, dKey: "about_r1_d" as const },
+  { icon: Sparkles, tKey: "about_r2_t" as const, dKey: "about_r2_d" as const },
+  { icon: Users, tKey: "about_r3_t" as const, dKey: "about_r3_d" as const },
+  { icon: Target, tKey: "about_r4_t" as const, dKey: "about_r4_d" as const },
 ];
 
 const WHATSAPP_URL = "https://wa.me/919879270170";
 const PHONE_DISPLAY = "+91 98792 70170";
 
 const About = () => {
+  const t = useT();
   return (
     <div>
       {/* HERO */}
@@ -56,26 +30,24 @@ const About = () => {
         <div className="container-px mx-auto max-w-7xl py-20 md:py-28 relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-soft text-primary text-xs font-semibold tracking-wide uppercase">
-              About ClaimsMitra
+              {t("about_chip")}
             </span>
             <h1 className="mt-5 font-display text-4xl md:text-6xl font-bold tracking-tight leading-[1.05]">
-              Your reliable partner for <span className="gradient-text">stuck insurance claims</span>.
+              {t("about_title_1")} <span className="gradient-text">{t("about_title_2")}</span>.
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
-              ClaimsMitra is a dedicated platform helping individuals navigate difficult or delayed
-              insurance claims. We simplify the process and provide guidance, support and real
-              solutions — so people receive what they rightfully deserve.
+              {t("about_sub")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="hero" size="lg">
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="h-5 w-5" />
-                  Chat on WhatsApp
+                  {t("about_wa")}
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link to="/contact">
-                  Talk to an advisor <ArrowRight className="h-4 w-4" />
+                  {t("about_advisor")} <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
             </div>
@@ -99,25 +71,21 @@ const About = () => {
       <section className="py-16 md:py-20">
         <div className="container-px mx-auto max-w-7xl grid lg:grid-cols-2 gap-10">
           <div className="rounded-2xl border border-border bg-card p-8 md:p-10 shadow-sm">
-            <h2 className="font-display text-2xl md:text-3xl font-bold tracking-tight">Who we are</h2>
+            <h2 className="font-display text-2xl md:text-3xl font-bold tracking-tight">{t("about_who")}</h2>
             <p className="mt-4 text-muted-foreground leading-relaxed">
-              We understand how stressful and confusing insurance claims can be. Denial letters,
-              vague clauses, repeated follow-ups — they leave policyholders exhausted at the worst
-              possible time.
+              {t("about_who_p1")}
             </p>
             <p className="mt-4 text-muted-foreground leading-relaxed">
-              That's why ClaimsMitra exists: to act as a reliable partner who assists, guides and
-              resolves claim-related issues efficiently, with transparency at every step.
+              {t("about_who_p2")}
             </p>
           </div>
 
           <div className="rounded-2xl gradient-hero p-8 md:p-10 text-primary-foreground shadow-glow relative overflow-hidden">
             <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" aria-hidden />
             <Target className="h-8 w-8" />
-            <h2 className="mt-4 font-display text-2xl md:text-3xl font-bold tracking-tight">Our Mission</h2>
+            <h2 className="mt-4 font-display text-2xl md:text-3xl font-bold tracking-tight">{t("about_mission")}</h2>
             <p className="mt-4 text-base md:text-lg text-primary-foreground/90 leading-relaxed">
-              To empower people by resolving insurance claim challenges with
-              <span className="font-semibold"> transparency, speed and trust</span>.
+              {t("about_mission_desc")}
             </p>
           </div>
         </div>
@@ -127,12 +95,12 @@ const About = () => {
       <section className="py-16 md:py-20 bg-muted/40">
         <div className="container-px mx-auto max-w-7xl">
           <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary">Leadership</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">{t("about_lead")}</span>
             <h2 className="mt-2 font-display text-3xl md:text-4xl font-bold tracking-tight">
-              The team behind ClaimsMitra
+              {t("about_lead_title")}
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Operators with decades of combined experience across insurance, finance and dispute resolution.
+              {t("about_lead_sub")}
             </p>
           </div>
 
@@ -146,7 +114,7 @@ const About = () => {
                   {p.initials}
                 </div>
                 <h3 className="mt-5 font-display text-xl font-semibold">{p.name}</h3>
-                <p className="text-sm text-primary font-medium mt-1">{p.role}</p>
+                <p className="text-sm text-primary font-medium mt-1">{t(p.roleKey)}</p>
               </div>
             ))}
           </div>
@@ -157,23 +125,23 @@ const About = () => {
       <section className="py-16 md:py-20">
         <div className="container-px mx-auto max-w-7xl">
           <div className="max-w-2xl">
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary">Why choose us</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">{t("about_why")}</span>
             <h2 className="mt-2 font-display text-3xl md:text-4xl font-bold tracking-tight">
-              Built to fight for the policyholder
+              {t("about_why_title")}
             </h2>
           </div>
 
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {reasons.map((r) => (
               <div
-                key={r.title}
+                key={r.tKey}
                 className="rounded-2xl border border-border bg-card p-6 hover:border-primary/40 hover:shadow-sm transition-smooth"
               >
                 <div className="h-11 w-11 rounded-xl bg-primary-soft text-primary grid place-items-center">
                   <r.icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-4 font-semibold text-base">{r.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
+                <h3 className="mt-4 font-semibold text-base">{t(r.tKey)}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{t(r.dKey)}</p>
               </div>
             ))}
           </div>
@@ -187,11 +155,11 @@ const About = () => {
             <div className="h-11 w-11 rounded-xl bg-primary-soft text-primary grid place-items-center">
               <MapPin className="h-5 w-5" />
             </div>
-            <h2 className="mt-5 font-display text-2xl md:text-3xl font-bold tracking-tight">Our Office</h2>
+            <h2 className="mt-5 font-display text-2xl md:text-3xl font-bold tracking-tight">{t("about_office")}</h2>
             <address className="mt-4 not-italic text-muted-foreground leading-relaxed">
-              <span className="block font-semibold text-foreground">AFC Ventures</span>
-              Office No. 13, Loyalka Compound<br />
-              Opp. Chowpatty, Mumbai
+              <span className="block font-semibold text-foreground">{t("about_addr_company")}</span>
+              {t("about_addr_line1")}<br />
+              {t("about_addr_line2")}
             </address>
           </div>
 
@@ -200,10 +168,10 @@ const About = () => {
               <MessageCircle className="h-5 w-5" />
             </div>
             <h2 className="mt-5 font-display text-2xl md:text-3xl font-bold tracking-tight">
-              Have a stuck claim? Talk to us today.
+              {t("about_stuck")}
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Reach out on WhatsApp for the fastest response. Our advisors review every case personally.
+              {t("about_stuck_desc")}
             </p>
 
             <a
@@ -218,12 +186,12 @@ const About = () => {
               <Button asChild variant="hero" size="lg">
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="h-5 w-5" />
-                  Chat on WhatsApp
+                  {t("about_wa")}
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link to="/contact">
-                  Free claim review <ArrowRight className="h-4 w-4" />
+                  {t("about_free")} <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
             </div>

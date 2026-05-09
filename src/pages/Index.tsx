@@ -11,8 +11,10 @@ import heroImg from "@/assets/hero-illustration.jpg";
 import processImg from "@/assets/process-illustration.jpg";
 import familyImg from "@/assets/family-protection.jpg";
 import heroMotion from "@/assets/hero-motion.mp4.asset.json";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Index = () => {
+  const { t, lang } = useLanguage();
   const [claimType, setClaimType] = useState("");
   const [amount, setAmount] = useState("");
   const [showResult, setShowResult] = useState(false);
@@ -43,27 +45,26 @@ const Index = () => {
         <div className="container-px mx-auto max-w-7xl pt-16 md:pt-24 pb-20 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative">
           <div className="animate-fade-in-up">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight">
-              Your insurer said no.
+              {t("hero_title_1")}
               <br />
-              <span className="gradient-text">We help you say yes.</span>
+              <span className="gradient-text">{t("hero_title_2")}</span>
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              ClaimsMitra fights rejected, delayed and short-settled health and motor insurance claims —
-              with documented appeals, regulator escalations and a recovery you can verify.
+              {t("hero_sub")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="hero" size="lg">
                 <Link to="/contact">
-                  Get a Free Claim Review <ArrowRight className="h-4 w-4" />
+                  {t("hero_cta_review")} <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/services">How we work</Link>
+                <Link to="/services">{t("hero_cta_how")}</Link>
               </Button>
             </div>
             <div className="mt-8 flex items-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent" /> No win, no fee</div>
-              <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent" /> 100% confidential</div>
+              <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent" /> {t("hero_chip_1")}</div>
+              <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent" /> {t("hero_chip_2")}</div>
             </div>
 
             {/* Hero illustration on mobile */}
@@ -100,41 +101,41 @@ const Index = () => {
                   <FileSearch className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-lg">Submit Your Claim Issue</h3>
-                  <p className="text-xs text-muted-foreground">Takes less than 60 seconds · No login required</p>
+                  <h3 className="font-display font-bold text-lg">{t("elig_title")}</h3>
+                  <p className="text-xs text-muted-foreground">{t("elig_sub")}</p>
                 </div>
               </div>
 
               <form onSubmit={checkEligibility} className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Type of claim</label>
+                  <label className="text-sm font-medium mb-1.5 block">{t("elig_type")}</label>
                   <select
                     required
                     value={claimType}
                     onChange={(e) => setClaimType(e.target.value)}
                     className="w-full h-11 rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   >
-                    <option value="">Select claim type…</option>
-                    <option>General Insurance</option>
-                    <option>Health Insurance</option>
-                    <option>Travel Insurance</option>
-                    <option>Motor Insurance</option>
+                    <option value="">{t("elig_type_placeholder")}</option>
+                    <option>{t("opt_general")}</option>
+                    <option>{t("opt_health")}</option>
+                    <option>{t("opt_travel")}</option>
+                    <option>{t("opt_motor")}</option>
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Disputed amount (₹)</label>
+                  <label className="text-sm font-medium mb-1.5 block">{t("elig_amount")}</label>
                   <input
                     required
                     type="number"
                     min="1000"
-                    placeholder="e.g. 85,000"
+                    placeholder={t("elig_amount_placeholder")}
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     className="w-full h-11 rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
                 <Button type="submit" variant="hero" size="lg" className="w-full">
-                  Check Eligibility <ArrowRight className="h-4 w-4" />
+                  {t("elig_check")} <ArrowRight className="h-4 w-4" />
                 </Button>
               </form>
 
@@ -143,11 +144,11 @@ const Index = () => {
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-accent mt-0.5" />
                     <div>
-                      <p className="font-semibold text-sm">Strong case for recovery</p>
+                      <p className="font-semibold text-sm">{t("elig_result_title")}</p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Based on your inputs, your claim qualifies for a full review.{" "}
+                        {t("elig_result_desc")}{" "}
                         <Link to="/contact" className="text-primary font-medium underline-offset-2 hover:underline">
-                          Speak to an expert →
+                          {t("elig_result_cta")}
                         </Link>
                       </p>
                     </div>
@@ -164,10 +165,10 @@ const Index = () => {
       <section className="container-px mx-auto max-w-7xl py-16">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { v: 120, suf: "+", label: "Claims recovered", icon: Trophy, accent: false },
-            { v: 95, suf: "%+", label: "Success rate", icon: TrendingUp, accent: false },
-            { v: 14, suf: "Cr+", label: "Recovered for clients", pre: "₹", icon: Wallet, accent: false },
-            { v: 21, suf: " days", label: "Avg. resolution time", icon: Timer, accent: true },
+            { v: 120, suf: "+", label: t("stat_claims"), icon: Trophy, accent: false },
+            { v: 95, suf: "%+", label: t("stat_success"), icon: TrendingUp, accent: false },
+            { v: 14, suf: "Cr+", label: t("stat_recovered"), pre: "₹", icon: Wallet, accent: false },
+            { v: 21, suf: lang === "hi" ? " दिन" : " days", label: t("stat_resolution"), icon: Timer, accent: true },
           ].map((s, i) => (
             <div
               key={i}
@@ -179,7 +180,7 @@ const Index = () => {
             >
               {s.accent && (
                 <div className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider text-accent bg-accent/10 px-2 py-0.5 rounded-full">
-                  Fast
+                  {t("stat_fast")}
                 </div>
               )}
               <div
@@ -215,18 +216,16 @@ const Index = () => {
             />
           </div>
           <div className="order-1 lg:order-2">
-            <p className="text-primary font-semibold text-sm uppercase tracking-wider">How it works</p>
+            <p className="text-primary font-semibold text-sm uppercase tracking-wider">{t("how_eyebrow")}</p>
             <h2 className="font-display text-3xl sm:text-4xl font-bold mt-3 leading-tight">
-              An expert by your side — from rejection to recovery.
+              {t("how_title")}
             </h2>
             <p className="mt-4 text-muted-foreground leading-relaxed">
-              Talk to a real claim specialist. We audit your denial, draft the appeal,
-              escalate to the regulator if needed, and recover your money — with full
-              transparency at every step.
+              {t("how_desc")}
             </p>
             <div className="mt-8">
               <Button asChild variant="hero" size="lg">
-                <Link to="/contact">Book a free call <ArrowRight className="h-4 w-4" /></Link>
+                <Link to="/contact">{t("how_book")} <ArrowRight className="h-4 w-4" /></Link>
               </Button>
             </div>
           </div>
@@ -236,31 +235,30 @@ const Index = () => {
       {/* SERVICES OVERVIEW */}
       <section className="container-px mx-auto max-w-7xl py-20">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-primary font-semibold text-sm uppercase tracking-wider">What we fight for</p>
+          <p className="text-primary font-semibold text-sm uppercase tracking-wider">{t("svc_eyebrow")}</p>
           <h2 className="font-display text-3xl sm:text-4xl font-bold mt-3">
-            Three claim battles, one expert team
+            {t("svc_title")}
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Most denied or under-paid claims fall into three patterns. We handle each with a documented,
-            regulator-aware playbook.
+            {t("svc_desc")}
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
-              icon: FileText, title: "Rejected Claims",
-              desc: "Non-disclosure, waiting-period or exclusion-based denials reversed via documented appeals and Ombudsman escalation.",
+              icon: FileText, title: t("svc_card1_t"),
+              desc: t("svc_card1_d"),
               color: "from-primary/10 to-primary/5",
             },
             {
-              icon: Clock, title: "Delayed Claims",
-              desc: "IRDAI mandates 30-day settlement. We compel insurers to act — with interest at bank rate + 2%.",
+              icon: Clock, title: t("svc_card2_t"),
+              desc: t("svc_card2_d"),
               color: "from-accent/15 to-accent/5",
             },
             {
-              icon: IndianRupee, title: "Short Settlement",
-              desc: "Room-rent proportionate deductions, non-medical line items and R&C disputes recovered in full.",
+              icon: IndianRupee, title: t("svc_card3_t"),
+              desc: t("svc_card3_d"),
               color: "from-warning/10 to-warning/5",
             },
           ].map((s) => (
@@ -277,7 +275,7 @@ const Index = () => {
                 <h3 className="font-display font-bold text-xl mb-2">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
                 <div className="mt-5 inline-flex items-center text-sm font-semibold text-primary">
-                  Learn more <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-smooth" />
+                  {t("svc_learn")} <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-smooth" />
                 </div>
               </div>
             </Link>
@@ -289,25 +287,25 @@ const Index = () => {
       <section className="bg-secondary/40 py-20 border-y border-border">
         <div className="container-px mx-auto max-w-7xl">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <p className="text-primary font-semibold text-sm uppercase tracking-wider">Our process</p>
+            <p className="text-primary font-semibold text-sm uppercase tracking-wider">{t("proc_eyebrow")}</p>
             <h2 className="font-display text-3xl sm:text-4xl font-bold mt-3">
-              From rejection letter to recovery — in four steps
+              {t("proc_title")}
             </h2>
           </div>
 
           <div className="relative grid md:grid-cols-4 gap-6">
             <div className="hidden md:block absolute top-8 left-[12%] right-[12%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             {[
-              { i: MessageSquare, t: "Share your claim", d: "Upload policy, denial letter and bills. 5 minutes." },
-              { i: FileSearch, t: "Expert audit", d: "We identify violations of IRDAI regulation & policy clauses." },
-              { i: Scale, t: "Appeal & escalate", d: "Internal appeal, GRO, Bima Bharosa, Ombudsman — as needed." },
-              { i: HandCoins, t: "Recover funds", d: "Settlement directly to your bank, with regulator-mandated interest." },
+              { i: MessageSquare, t: t("proc_s1_t"), d: t("proc_s1_d") },
+              { i: FileSearch, t: t("proc_s2_t"), d: t("proc_s2_d") },
+              { i: Scale, t: t("proc_s3_t"), d: t("proc_s3_d") },
+              { i: HandCoins, t: t("proc_s4_t"), d: t("proc_s4_d") },
             ].map((step, idx) => (
               <div key={idx} className="relative text-center">
                 <div className="relative z-10 mx-auto h-16 w-16 rounded-2xl gradient-hero grid place-items-center text-primary-foreground shadow-glow">
                   <step.i className="h-7 w-7" strokeWidth={2.2} />
                 </div>
-                <div className="mt-2 text-xs font-bold text-primary">STEP {idx + 1}</div>
+                <div className="mt-2 text-xs font-bold text-primary">{t("proc_step")} {idx + 1}</div>
                 <h4 className="mt-1 font-display font-semibold text-lg">{step.t}</h4>
                 <p className="mt-2 text-sm text-muted-foreground max-w-xs mx-auto">{step.d}</p>
               </div>
@@ -319,9 +317,9 @@ const Index = () => {
       {/* TESTIMONIALS */}
       <section className="container-px mx-auto max-w-7xl py-20">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-primary font-semibold text-sm uppercase tracking-wider">Client outcomes</p>
+          <p className="text-primary font-semibold text-sm uppercase tracking-wider">{t("test_eyebrow")}</p>
           <h2 className="font-display text-3xl sm:text-4xl font-bold mt-3">
-            Real recoveries. Real families.
+            {t("test_title")}
           </h2>
         </div>
 
@@ -339,17 +337,17 @@ const Index = () => {
               q: "Insurer sat on my claim for 87 days. ClaimsMitra escalated to Bima Bharosa and we got the payout plus ₹6,400 in interest.",
               a: "Rohit Banerjee", r: "Kolkata · Delayed Claim",
             },
-          ].map((t, i) => (
+          ].map((tm, i) => (
             <div key={i} className="p-7 rounded-2xl bg-card border border-border shadow-card hover-lift">
               <div className="flex gap-0.5 mb-4">
                 {Array.from({ length: 5 }).map((_, k) => (
                   <Star key={k} className="h-4 w-4 fill-warning text-warning" />
                 ))}
               </div>
-              <p className="text-foreground/90 leading-relaxed">"{t.q}"</p>
+              <p className="text-foreground/90 leading-relaxed">"{tm.q}"</p>
               <div className="mt-5 pt-5 border-t border-border">
-                <p className="font-semibold text-sm">{t.a}</p>
-                <p className="text-xs text-muted-foreground">{t.r}</p>
+                <p className="font-semibold text-sm">{tm.a}</p>
+                <p className="text-xs text-muted-foreground">{tm.r}</p>
               </div>
             </div>
           ))}
@@ -369,13 +367,12 @@ const Index = () => {
               className="w-full max-w-sm mx-auto rounded-2xl"
             />
             <div>
-              <p className="text-primary font-semibold text-sm uppercase tracking-wider">Why it matters</p>
+              <p className="text-primary font-semibold text-sm uppercase tracking-wider">{t("fam_eyebrow")}</p>
               <h2 className="font-display text-3xl sm:text-4xl font-bold mt-3 leading-tight">
-                A claim isn't a number. It's your family's safety net.
+                {t("fam_title")}
               </h2>
               <p className="mt-4 text-muted-foreground leading-relaxed max-w-xl">
-                When an insurer says no, the bills don't stop. We make sure your policy pays
-                what it promised — quickly, completely, and without the runaround.
+                {t("fam_desc")}
               </p>
             </div>
           </div>
@@ -392,17 +389,17 @@ const Index = () => {
           <div className="relative">
             <ShieldCheck className="h-12 w-12 text-primary-foreground mx-auto mb-4" />
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-primary-foreground">
-              Don't let a denial be the final word.
+              {t("fcta_title")}
             </h2>
             <p className="mt-4 text-primary-foreground/85 max-w-xl mx-auto">
-              A free, no-obligation review of your claim by an insurance expert. Most cases qualify for recovery.
+              {t("fcta_desc")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3 justify-center">
               <Button asChild size="lg" className="bg-background text-primary hover:bg-background/90">
-                <Link to="/contact">Start Free Review <ArrowRight className="h-4 w-4" /></Link>
+                <Link to="/contact">{t("fcta_start")} <ArrowRight className="h-4 w-4" /></Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
-                <Link to="/blog">Read claim guides</Link>
+                <Link to="/blog">{t("fcta_guides")}</Link>
               </Button>
             </div>
           </div>

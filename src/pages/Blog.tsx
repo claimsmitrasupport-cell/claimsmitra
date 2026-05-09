@@ -1,25 +1,47 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock } from "lucide-react";
 import { blogs } from "@/data/blogs";
-
-const categories = ["All", ...Array.from(new Set(blogs.map((b) => b.category)))];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Blog = () => {
-  const [active, setActive] = useState("All");
-  const filtered = active === "All" ? blogs : blogs.filter((b) => b.category === active);
+  const { lang, t } = useLanguage();
+
+  const localized = useMemo(
+    () =>
+      blogs.map((b) => ({
+        id: b.id,
+        readTime: b.readTime,
+        date: b.date,
+        image: b.image,
+        title: b[lang].title,
+        category: b[lang].category,
+        preview: b[lang].preview,
+      })),
+    [lang]
+  );
+
+  const allLabel = t("blog_all");
+  const categories = useMemo(
+    () => [allLabel, ...Array.from(new Set(localized.map((b) => b.category)))],
+    [localized, allLabel]
+  );
+
+  const [active, setActive] = useState(allLabel);
+  const currentActive = categories.includes(active) ? active : allLabel;
+  const filtered = currentActive === allLabel ? localized : localized.filter((b) => b.category === currentActive);
 
   return (
     <>
       <section className="container-px mx-auto max-w-7xl pt-16 md:pt-24 pb-12 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-soft text-primary text-xs font-semibold mb-5">
-          Knowledge Hub
+          {t("blog_chip")}
         </div>
         <h1 className="font-display text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-tight">
-          Practical guides to keep your claim from being denied.
+          {t("blog_title")}
         </h1>
         <p className="mt-5 text-lg text-muted-foreground max-w-2xl mx-auto">
-          Written by claim specialists who fight insurers every day. No jargon, no ads — just what works.
+          {t("blog_sub")}
         </p>
       </section>
 
@@ -31,7 +53,7 @@ const Blog = () => {
               key={c}
               onClick={() => setActive(c)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-smooth ${
-                active === c
+                currentActive === c
                   ? "gradient-hero text-primary-foreground shadow-sm"
                   : "bg-secondary text-foreground/70 hover:bg-primary-soft hover:text-primary"
               }`}
@@ -79,7 +101,7 @@ const Blog = () => {
                 <div className="mt-auto pt-5 flex items-center justify-between text-xs">
                   <span className="text-muted-foreground">{b.date}</span>
                   <span className="inline-flex items-center gap-1 text-primary font-semibold">
-                    Read <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-smooth" />
+                    {t("blog_read")} <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-smooth" />
                   </span>
                 </div>
               </div>
