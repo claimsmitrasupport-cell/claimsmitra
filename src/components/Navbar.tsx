@@ -4,19 +4,22 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/claims-mitra-logo.png";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/services", label: "Services" },
-  { to: "/blog", label: "Knowledge Hub" },
-  { to: "/contact", label: "Contact" },
-];
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useT } from "@/i18n/LanguageContext";
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const t = useT();
+
+  const links = [
+    { to: "/", label: t("nav_home") },
+    { to: "/about", label: t("nav_about") },
+    { to: "/services", label: t("nav_services") },
+    { to: "/blog", label: t("nav_blog") },
+    { to: "/contact", label: t("nav_contact") },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -36,7 +39,7 @@ export const Navbar = () => {
           : "bg-transparent"
       )}
     >
-      <nav className="container-px mx-auto max-w-7xl flex h-16 md:h-20 items-center justify-between">
+      <nav className="container-px mx-auto max-w-7xl flex h-16 md:h-20 items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-2 group">
           <img
             src={logo}
@@ -68,19 +71,23 @@ export const Navbar = () => {
           ))}
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-3">
+          <LanguageToggle />
           <Button asChild variant="hero" size="default">
-            <Link to="/contact">Free Claim Review</Link>
+            <Link to="/contact">{t("nav_cta")}</Link>
           </Button>
         </div>
 
-        <button
-          className="md:hidden p-2 rounded-lg hover:bg-muted"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex md:hidden items-center gap-2">
+          <LanguageToggle />
+          <button
+            className="p-2 rounded-lg hover:bg-muted"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
       {open && (
@@ -102,7 +109,7 @@ export const Navbar = () => {
               </NavLink>
             ))}
             <Button asChild variant="hero" className="mt-2">
-              <Link to="/contact">Free Claim Review</Link>
+              <Link to="/contact">{t("nav_cta")}</Link>
             </Button>
           </div>
         </div>
